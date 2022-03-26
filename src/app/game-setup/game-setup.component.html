@@ -1,10 +1,12 @@
 <h1>Who's Playing?</h1>
-<form #form="ngForm" nz-form>
+<form #playerForm="ngForm" nz-form (ngSubmit)="onSubmit()">
     <ul>
         <li *ngFor="let player of players">
             <nz-form-item>
                 <nz-form-label nzFor="name-{{player.id}}" nzRequired>Player Name</nz-form-label>
-                <nz-form-control>
+                <nz-form-control
+                    nzErrorTip="Please enter a player name"
+                >
                     <input
                         nz-input
                         type="text"
@@ -12,6 +14,7 @@
                         id="name-{{player.id}}"
                         name="name-{{player.id}}"
                         (blur)="onBlur()"
+                        required
                     >
                 </nz-form-control>
             </nz-form-item>
@@ -24,9 +27,14 @@
         </li>
     </ul>
     <button type="button" (click)="addPlayer()">Add Player</button>
-    <button *ngIf="roundToEdit === 1; else elseBlock" type="button" (click)="startGame()">Start Game</button>
+    <button
+        *ngIf="roundToEdit === 1; else elseBlock"
+        type="submit"
+        (click)="startGame()"
+        [disabled]="!playerForm.form.valid"
+    >Start Game</button>
     <ng-template #elseBlock>
-        <button type="button" (click)="continueGame()">Continue Game</button>
-        <button type="button" (click)="startGame()">Start New Game</button>
+        <button type="submit" (click)="continueGame()">Continue Game</button>
+        <button type="submit" (click)="startGame()">Start New Game</button>
     </ng-template>
 </form>

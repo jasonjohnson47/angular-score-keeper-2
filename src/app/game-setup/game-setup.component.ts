@@ -15,7 +15,7 @@ export class GameSetupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @ViewChild('form') myForm!: HTMLFormElement;
+  @ViewChild('playerForm') playerForm!: HTMLFormElement;
 
   roundToEdit = 1;
 
@@ -27,22 +27,15 @@ export class GameSetupComponent implements OnInit {
 
   focusFirstEmptyField() {
     setTimeout(() => {
-      const formValues = [];
-      for (const [key, value] of Object.entries(this.myForm['controls'])) {
-        formValues.push({ id: key, name: (value as FormControl).value });
-      }
-      //console.log(formValues);
-      const firstEmptyFieldId = formValues.findIndex((player) => player.name === '');
-      const firstEmptyField = this.myForm['form'].get('name-' + firstEmptyFieldId).nativeElement;
-      firstEmptyField.focus();
-    });
+      const firstEmptyNamePlayer = this.players.find((player) => player.name == '');
+      const firstEmptyFieldId = firstEmptyNamePlayer?.id;
 
-    /*setTimeout(() => {
-      const firstEmptyFieldId = this.players.findIndex((player) => player.name === '');
-      console.log(this.myForm['form'].get('name-' + firstEmptyFieldId));
-      const firstEmptyField = this.myForm['form'].get('name-' + firstEmptyFieldId).nativeElement;
-      firstEmptyField.focus();
-    }, 0);*/
+      if (firstEmptyFieldId != null) {
+        const firstEmptyField = this.playerForm['form'].get('name-' + firstEmptyFieldId).nativeElement;
+        firstEmptyField.focus();
+      }
+
+    }, 0);
   }
 
   addPlayer() {
@@ -56,6 +49,11 @@ export class GameSetupComponent implements OnInit {
     this.playerService.deletePlayer(id);
     this.players = this.playerService.getPlayers();
   };
+
+  onSubmit() {
+    this.startGame();
+    //this.continueGame();
+  }
 
   startGame() {
     console.log('Start Game', this.players);
