@@ -1,0 +1,32 @@
+<h1>Who's Playing?</h1>
+<form #form="ngForm" nz-form>
+    <ul>
+        <li *ngFor="let player of players">
+            <nz-form-item>
+                <nz-form-label nzFor="name-{{player.id}}" nzRequired>Player Name</nz-form-label>
+                <nz-form-control>
+                    <input
+                        nz-input
+                        type="text"
+                        [(ngModel)]="player.name"
+                        id="name-{{player.id}}"
+                        name="name-{{player.id}}"
+                        (blur)="onBlur()"
+                    >
+                </nz-form-control>
+            </nz-form-item>
+            <button
+                *ngIf="players.length > 1"
+                type="button"
+                (click)="deletePlayer(player.id)"
+                data-id="{{ player.id }}"
+            > Delete Player </button>
+        </li>
+    </ul>
+    <button type="button" (click)="addPlayer()">Add Player</button>
+    <button *ngIf="roundToEdit === 1; else elseBlock" type="button" (click)="startGame()">Start Game</button>
+    <ng-template #elseBlock>
+        <button type="button" (click)="continueGame()">Continue Game</button>
+        <button type="button" (click)="startGame()">Start New Game</button>
+    </ng-template>
+</form>
