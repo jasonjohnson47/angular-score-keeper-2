@@ -1,0 +1,42 @@
+<h1>Round 1</h1>
+<nav class="nav-buttons">
+    <ul>
+        <li><a routerLink="/game-history">View Scoring History</a></li>
+        <li><a routerLink="/game-setup">Manage Players</a></li>
+    </ul>
+</nav>
+<h2>Score Card</h2>
+<form #scoringForm="ngForm" nz-form (ngSubmit)="onSubmit()">
+    <ul>
+        <li>
+            <dl>
+                <div>
+                    <dt>Jason</dt>
+                    <dd>10</dd>
+                </div>
+            </dl>
+            <div>
+                <div>+/-</div>
+                <div>
+                    <nz-form-item>
+                        <nz-form-label nzFor="points-0" nzRequired>Points</nz-form-label>
+                        <nz-form-control
+                            nzErrorTip="Please enter points"
+                        >
+                            <input
+                                nz-input
+                                type="number"
+                                [(ngModel)]="model"
+                                id="points-0"
+                                name="points-0"
+                                (blur)="onBlur()"
+                                required
+                            >
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div><button type="button">Submit Round</button></div>
+</form>

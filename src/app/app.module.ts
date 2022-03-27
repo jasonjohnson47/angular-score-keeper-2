@@ -13,6 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GameSetupComponent } from './game-setup/game-setup.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NativeElementInjectorDirective } from './native-element-injector.directive';
+import { CurrentRoundComponent } from './current-round/current-round.component';
+import { GameHistoryComponent } from './game-history/game-history.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { EditRoundComponent } from './edit-round/edit-round.component';
 
 registerLocaleData(en);
 
@@ -20,7 +24,11 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     GameSetupComponent,
-    NativeElementInjectorDirective
+    NativeElementInjectorDirective,
+    CurrentRoundComponent,
+    GameHistoryComponent,
+    PageNotFoundComponent,
+    EditRoundComponent
   ],
   imports: [
     BrowserModule,

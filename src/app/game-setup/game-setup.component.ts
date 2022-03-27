@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Player } from '../common/models/player';
 import { PlayerService } from '../common/services/player.service';
 
@@ -10,7 +10,10 @@ import { PlayerService } from '../common/services/player.service';
 })
 export class GameSetupComponent implements OnInit {
 
-  constructor(private playerService: PlayerService) { }
+  constructor(
+    private playerService: PlayerService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
@@ -57,6 +60,8 @@ export class GameSetupComponent implements OnInit {
 
   startGame() {
     console.log('Start Game', this.players);
+    this.router.navigate(['/current-round']);
+
   }
   continueGame() {
     console.log('Continue Game', this.players);
