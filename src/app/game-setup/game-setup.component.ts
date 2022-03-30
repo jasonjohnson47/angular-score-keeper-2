@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Player } from '../common/models/player';
+import { ScoreHistory } from '../common/models/score';
 import { PlayerService } from '../common/services/player.service';
+import { ScoreService } from '../common/services/score.service';
 
 @Component({
   selector: 'app-game-setup',
@@ -12,6 +14,7 @@ export class GameSetupComponent implements OnInit {
 
   constructor(
     private playerService: PlayerService,
+    private scoreService: ScoreService,
     private router: Router
   ) { }
 
@@ -41,10 +44,18 @@ export class GameSetupComponent implements OnInit {
     }, 0);
   }
 
+  get scoreHistory(): ScoreHistory {
+    return this.scoreService.getScoreHistory();
+  }
+
   addPlayer() {
     const playerIds = this.players.map((player) => player.id);
     const highestId = Math.max(...playerIds);
-    this.players.push({ id: highestId + 1, name:'' });
+    const newPlayerId = highestId + 1;
+    this.players.push({ id: newPlayerId, name:'' });
+
+    this.scoreService.updateScoreHistoryNewPlayer(this.scoreHistory, newPlayerId);
+
     this.focusFirstEmptyField();
   }
 

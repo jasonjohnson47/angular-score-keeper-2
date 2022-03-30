@@ -1,4 +1,4 @@
-<h1>Round 1</h1>
+<h1>Round {{roundToEdit}}</h1>
 <nav class="nav-buttons">
     <ul>
         <li><a routerLink="/game-history">View Scoring History</a></li>
@@ -8,27 +8,45 @@
 <h2>Score Card</h2>
 <form #scoringForm="ngForm" nz-form (ngSubmit)="onSubmit()">
     <ul>
-        <li>
+        <li *ngFor="let player of players">
             <dl>
                 <div>
-                    <dt>Jason</dt>
-                    <dd>10</dd>
+                    <dt>{{player.name}}</dt>
+                    <dd>{{getAccumulativeScoreById(scoreHistory, player.id, roundToEdit)}}</dd>
                 </div>
             </dl>
             <div>
-                <div>+/-</div>
+                <div>
+                    <input
+                        type="hidden"
+                        [(ngModel)]="playerOperations['operation-' + player.id]"
+                        name="operation-{{player.id}}"
+                    >
+                    <button
+                        type="button"
+                        id="add-sub-{{player.id}}"
+                        class="add-sub-btn"
+                        aria-describedby="add-sub-toggle-desc"
+                        [attr.aria-pressed]="playerOperations['operation-' + player.id] == 'subtract'"
+                        (click)="onAddSubPressed(player.id)"
+                    >
+                        <span class="add" aria-label="Add">+</span>
+                        <span class="subtract" aria-label="Subtract">-</span>
+                    </button>
+                    <span id="add-sub-toggle-desc" class="visually-hidden">Click to toggle between add and subtract.</span>
+                </div>
                 <div>
                     <nz-form-item>
-                        <nz-form-label nzFor="points-0" nzRequired>Points</nz-form-label>
+                        <nz-form-label nzFor="points-{{player.id}}" nzRequired>Points</nz-form-label>
                         <nz-form-control
                             nzErrorTip="Please enter points"
                         >
                             <input
                                 nz-input
                                 type="number"
-                                [(ngModel)]="model"
-                                id="points-0"
-                                name="points-0"
+                                [(ngModel)]="playerPoints[player.id]"
+                                id="points-{{player.id}}"
+                                name="points-{{player.id}}"
                                 (blur)="onBlur()"
                                 required
                             >
@@ -38,5 +56,5 @@
             </div>
         </li>
     </ul>
-    <div><button type="button">Submit Round</button></div>
+    <div><button type="submit">Submit Round</button></div>
 </form>

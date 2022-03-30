@@ -18,7 +18,7 @@ export class PlayerService {
   getPlayers(): Player[] {
     return JSON.parse(
       localStorage.getItem('score-keeper-players') ||
-        JSON.stringify(this.initialPlayers)
+        JSON.stringify(this.initialPlayers, null, 2)
     );
     //return PLAYERS;
   }
