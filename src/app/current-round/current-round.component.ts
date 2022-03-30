@@ -3,6 +3,7 @@ import { Player } from '../common/models/player';
 import { PlayerOperations } from '../common/models/player-operations';
 import { PlayerService } from '../common/services/player.service';
 import { ScoreService } from '../common/services/score.service';
+import { RoundService } from '../common/services/round.service';
 import { ScoreHistory, Round } from '../common/models/score';
 import { NgForm } from '@angular/forms';
 
@@ -14,7 +15,8 @@ import { NgForm } from '@angular/forms';
 export class CurrentRoundComponent implements OnInit {
   constructor(
     private playerService: PlayerService,
-    private scoreService: ScoreService
+    private scoreService: ScoreService,
+    private roundService: RoundService
   ) {}
 
   ngOnInit(): void {}
@@ -24,7 +26,7 @@ export class CurrentRoundComponent implements OnInit {
   players: Player[] = this.playerService.getPlayers();
 
   get roundToEdit(): number {
-    return this.scoreService.getRoundToEdit();
+    return this.roundService.getRoundToEdit();
   }
 
   get scoreHistory(): ScoreHistory {
@@ -33,7 +35,6 @@ export class CurrentRoundComponent implements OnInit {
 
   getAccumulativeScoreById = this.scoreService.getAccumulativeScoreById;
 
-  // state for current round
   playerPoints: { [key: number]: string } = this.players.reduce(
     (acc: { [key: number]: string }, currPlayer: Player) => {
       return { ...acc, [currPlayer.id]: '' };
@@ -77,8 +78,8 @@ export class CurrentRoundComponent implements OnInit {
   onBlur() {}
 
   onSubmit() {
-    this.scoreService.setRoundToEdit(this.roundToEdit + 1);
-    this.scoreService.updateScoreHistory(this.scoreHistory, this.thisRoundScores);
+    this.roundService.setRoundToEdit(this.roundToEdit + 1);
+    this.scoreService.addRoundToScoreHistory(this.scoreHistory, this.thisRoundScores);
     this.scoringForm.reset(this.defaultPlayerOperations);
   }
 }

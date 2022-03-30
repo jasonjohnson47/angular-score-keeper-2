@@ -56,5 +56,5 @@
             </div>
         </li>
     </ul>
-    <div><button type="submit">Submit Round</button></div>
+    <div><button type="submit" [disabled]="!scoringForm.form.valid">Submit Round</button></div>
 </form>

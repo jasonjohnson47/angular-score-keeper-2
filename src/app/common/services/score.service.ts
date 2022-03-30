@@ -1,27 +1,13 @@
 import { Injectable } from '@angular/core';
 import { PlayerService } from './player.service';
 import { Player } from '../models/player';
-import { Score, Round, ScoreHistory } from '../models/score';
+import { Round, ScoreHistory } from '../models/score';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScoreService {
   constructor(private playerService: PlayerService) {}
-
-  initialRoundToEdit = 1;
-  getRoundToEdit() {
-    return JSON.parse(
-      localStorage.getItem('score-keeper-roundToEdit') ||
-        JSON.stringify(this.initialRoundToEdit, null, 2)
-    );
-  }
-  setRoundToEdit(roundNumber: number) {
-    localStorage.setItem(
-      'score-keeper-roundToEdit',
-      JSON.stringify(roundNumber, null, 2)
-    );
-  }
 
   players: Player[] = this.playerService.getPlayers();
 
@@ -38,7 +24,18 @@ export class ScoreService {
     );
   }
 
-  updateScoreHistoryNewPlayer(
+  setScoreHistory(score: ScoreHistory) {
+    localStorage.setItem(
+      'score-keeper-scores',
+      JSON.stringify(score, null, 2)
+    );
+  }
+
+  resetScoreHistory() {
+    this.setScoreHistory(this.initialScoreHistory);
+  }
+
+  addPlayerToScoreHistory(
     scoreHistory: ScoreHistory,
     newPlayerId: number
   ) {
@@ -56,7 +53,7 @@ export class ScoreService {
     );
   }
 
-  updateScoreHistory(
+  addRoundToScoreHistory(
     scoreHistory: ScoreHistory,
     newRound: Round
   ) {

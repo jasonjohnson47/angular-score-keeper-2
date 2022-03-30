@@ -4,6 +4,7 @@ import { Player } from '../common/models/player';
 import { ScoreHistory } from '../common/models/score';
 import { PlayerService } from '../common/services/player.service';
 import { ScoreService } from '../common/services/score.service';
+import { RoundService } from '../common/services/round.service';
 
 @Component({
   selector: 'app-game-setup',
@@ -15,6 +16,7 @@ export class GameSetupComponent implements OnInit {
   constructor(
     private playerService: PlayerService,
     private scoreService: ScoreService,
+    private roundService: RoundService,
     private router: Router
   ) { }
 
@@ -23,7 +25,7 @@ export class GameSetupComponent implements OnInit {
 
   @ViewChild('playerForm') playerForm!: HTMLFormElement;
 
-  roundToEdit = 1;
+  roundToEdit = this.roundService.getRoundToEdit();
 
   players: Player[] = this.playerService.getPlayers();
 
@@ -54,7 +56,7 @@ export class GameSetupComponent implements OnInit {
     const newPlayerId = highestId + 1;
     this.players.push({ id: newPlayerId, name:'' });
 
-    this.scoreService.updateScoreHistoryNewPlayer(this.scoreHistory, newPlayerId);
+    this.scoreService.addPlayerToScoreHistory(this.scoreHistory, newPlayerId);
 
     this.focusFirstEmptyField();
   }
@@ -64,18 +66,13 @@ export class GameSetupComponent implements OnInit {
     this.players = this.playerService.getPlayers();
   };
 
-  onSubmit() {
-    this.startGame();
-    //this.continueGame();
-  }
-
-  startGame() {
-    console.log('Start Game', this.players);
+  startNewGame() {
+    this.roundService.resetRoundToEdit();
+    this.scoreService.resetScoreHistory();
     this.router.navigate(['/current-round']);
-
   }
   continueGame() {
-    console.log('Continue Game', this.players);
+    this.router.navigate(['/current-round']);
   }
 
 }

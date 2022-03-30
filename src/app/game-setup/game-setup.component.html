@@ -1,5 +1,5 @@
 <h1>Who's Playing?</h1>
-<form #playerForm="ngForm" nz-form (ngSubmit)="onSubmit()">
+<form #playerForm="ngForm" nz-form (ngSubmit)="startNewGame()">
     <ul>
         <li *ngFor="let player of players">
             <nz-form-item>
@@ -30,11 +30,17 @@
     <button
         *ngIf="roundToEdit === 1; else elseBlock"
         type="submit"
-        (click)="startGame()"
         [disabled]="!playerForm.form.valid"
     >Start Game</button>
     <ng-template #elseBlock>
-        <button type="submit" (click)="continueGame()">Continue Game</button>
-        <button type="submit" (click)="startGame()">Start New Game</button>
+        <button
+            type="button"
+            (click)="continueGame()"
+            [disabled]="!playerForm.form.valid"
+        >Continue Game</button>
+        <button
+            type="submit"
+            [disabled]="!playerForm.form.valid"
+        >Start New Game</button>
     </ng-template>
 </form>
