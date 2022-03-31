@@ -17,7 +17,7 @@ export class ScoreService {
 
   initialScoreHistory: ScoreHistory = [this.initialRoundPoints];
 
-  getScoreHistory() {
+  getScoreHistory(): ScoreHistory {
     return JSON.parse(
       localStorage.getItem('score-keeper-scores') ||
         JSON.stringify(this.initialScoreHistory, null, 2)

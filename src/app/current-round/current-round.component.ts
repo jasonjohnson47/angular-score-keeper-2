@@ -4,7 +4,7 @@ import { PlayerOperations } from '../common/models/player-operations';
 import { PlayerService } from '../common/services/player.service';
 import { ScoreService } from '../common/services/score.service';
 import { RoundService } from '../common/services/round.service';
-import { ScoreHistory, Round } from '../common/models/score';
+import { ScoreHistory, Round, PlayerPoints } from '../common/models/score';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -35,8 +35,8 @@ export class CurrentRoundComponent implements OnInit {
 
   getAccumulativeScoreById = this.scoreService.getAccumulativeScoreById;
 
-  playerPoints: { [key: number]: string } = this.players.reduce(
-    (acc: { [key: number]: string }, currPlayer: Player) => {
+  playerPoints: PlayerPoints = this.players.reduce(
+    (acc: PlayerPoints, currPlayer: Player) => {
       return { ...acc, [currPlayer.id]: '' };
     },
     {}
@@ -74,8 +74,6 @@ export class CurrentRoundComponent implements OnInit {
     this.playerOperations['operation-' + id] =
     this.playerOperations['operation-' + id] === 'subtract' ? 'add' : 'subtract';
   }
-
-  onBlur() {}
 
   onSubmit() {
     this.roundService.setRoundToEdit(this.roundToEdit + 1);

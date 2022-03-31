@@ -27,7 +27,7 @@
                 <nz-form-item>
                     <nz-form-label nzFor="points-{{player.id}}" nzRequired>Points</nz-form-label>
                     <nz-form-control
-                        nzErrorTip="Please enter points"
+                        nzErrorTip="Please enter points. Enter a positive number."
                     >
                         <input
                             nz-input
@@ -35,6 +35,7 @@
                             [(ngModel)]="playerPointsPositive[player.id]"
                             id="points-{{player.id}}"
                             name="points-{{player.id}}"
+                            min="0"
                             required
                         >
                     </nz-form-control>
@@ -42,8 +43,11 @@
             </div>
         </li>
     </ul>
+    <div>
+        <a routerLink="/game-history">Cancel</a>
+        <button
+            type="submit"
+            [disabled]="!editRoundForm.form.valid"
+        >Update</button>
+    </div>
 </form>
-<div>
-    <a routerLink="/game-history">Cancel</a>
-    <button type="submit">Update</button>
-</div>

@@ -39,7 +39,7 @@
                     <nz-form-item>
                         <nz-form-label nzFor="points-{{player.id}}" nzRequired>Points</nz-form-label>
                         <nz-form-control
-                            nzErrorTip="Please enter points"
+                            nzErrorTip="Please enter points. Enter a positive number."
                         >
                             <input
                                 nz-input
@@ -47,7 +47,7 @@
                                 [(ngModel)]="playerPoints[player.id]"
                                 id="points-{{player.id}}"
                                 name="points-{{player.id}}"
-                                (blur)="onBlur()"
+                                min="0"
                                 required
                             >
                         </nz-form-control>

@@ -4,3 +4,7 @@ export interface Score {
 }
 export type Round = Score[];
 export type ScoreHistory = Round[];
+
+export interface PlayerPoints {
+  [key: string]: string
+}

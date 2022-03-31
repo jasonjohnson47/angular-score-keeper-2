@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Player } from '../common/models/player';
 import { PlayerOperations } from '../common/models/player-operations';
-import { Score, Round } from '../common/models/score';
+import { Score, Round, ScoreHistory, PlayerPoints } from '../common/models/score';
 import { PlayerService } from '../common/services/player.service';
 import { ScoreService } from '../common/services/score.service';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @Component({
   selector: 'app-edit-round',
@@ -27,15 +28,15 @@ export class EditRoundComponent implements OnInit {
 
         this.players = this.playerService.getPlayers();
 
-        this.roundScores = this.scoreService.getScoreHistory()[this.roundToEdit];
+        this.initialRoundScores = this.scoreService.getScoreHistory()[this.roundToEdit];
 
-        this.playerPoints = this.roundScores.reduce((acc: any, curr: Score) => {
+        this.playerPoints = this.initialRoundScores.reduce((acc: PlayerPoints, curr: Score) => {
           return {...acc, [curr.id]: curr.points}
         }, {});
 
-        this.playerPointsPositive = {};
+        this.playerPointsPositive = {...this.playerPoints};
         for (const [key, value] of Object.entries(this.playerPoints)) {
-          this.playerPointsPositive[key] = Math.abs(value as number);
+          this.playerPointsPositive[key] = Math.abs(Number(value)).toString();
         }
 
         this.initialPlayerOperations = this.players.reduce(
@@ -43,7 +44,7 @@ export class EditRoundComponent implements OnInit {
             const keyName = 'operation-' + currPlayer.id;
             var operation: 'add' | 'subtract';
             
-            if (this.playerPoints[currPlayer.id] < 0) {
+            if (Number(this.playerPoints[currPlayer.id]) < 0) {
               operation = 'subtract';
             } else {
               operation = 'add'
@@ -61,12 +62,37 @@ export class EditRoundComponent implements OnInit {
   }
 
   roundToEdit!: number;
-  roundScores!: Round;
-  playerPoints!: any;
-  playerPointsPositive!: any;
   players!: Player[];
   initialPlayerOperations!: PlayerOperations;
+  initialRoundScores!: Round;
+
   playerOperations!: PlayerOperations;
+  playerPoints!: PlayerPoints;
+  playerPointsPositive!: PlayerPoints;
+
+  /*getPlayerPoints() {
+    return this.roundScores.reduce((acc: PlayerPoints, curr: Score) => {
+      return {...acc, [curr.id]: curr.points}
+    }, {});
+  }*/
+
+  get thisRoundScores() {
+    console.log('thisRoundScores, playerPoints', this.playerPoints);
+    const roundScores: Round = this.players.map((player) => {
+      function calcPoints(operation: string, points: number) {
+        let operationValue = operation === 'add' ? 1 : -1;
+        return points * operationValue;
+      }
+      return {
+        id: player.id,
+        points: calcPoints(
+          this.playerOperations['operation-' + player.id],
+          Number(this.playerPoints[player.id])
+        )
+      };
+    });
+    return roundScores;
+  }
 
   onAddSubPressed(id: number) {
     // unpressed = adding
@@ -76,7 +102,10 @@ export class EditRoundComponent implements OnInit {
   }
 
   onSubmit() {
-
+    const newScoreHistory = [...this.scoreService.getScoreHistory()];
+    newScoreHistory[this.roundToEdit] = this.thisRoundScores;
+    console.log('onSubmit, newScoreHistory', newScoreHistory);
+    this.scoreService.setScoreHistory(newScoreHistory);
   }
 
 }
