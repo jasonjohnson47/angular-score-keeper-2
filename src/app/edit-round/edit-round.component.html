@@ -1,6 +1,49 @@
-<h1>Edit Round</h1>
-<p>scoring form goes here</p>
+<h1>Edit Round {{roundToEdit}}</h1>
+<form #editRoundForm="ngForm" nz-form (ngSubmit)="onSubmit()">
+    <div class="container"></div>
+    <ul>
+        <li *ngFor="let player of players" class="row">
+            <div class="col">{{player.name}}</div>
+            <div class="col">
+                <input
+                    type="hidden"
+                    [(ngModel)]="playerOperations['operation-' + player.id]"
+                    name="operation-{{player.id}}"
+                >
+                <button
+                    type="button"
+                    id="add-sub-{{player.id}}"
+                    class="add-sub-btn"
+                    aria-describedby="add-sub-toggle-desc"
+                    [attr.aria-pressed]="playerOperations['operation-' + player.id] == 'subtract'"
+                    (click)="onAddSubPressed(player.id)"
+                >
+                    <span class="add" aria-label="Add">+</span>
+                    <span class="subtract" aria-label="Subtract">-</span>
+                </button>
+                <span id="add-sub-toggle-desc" class="visually-hidden">Click to toggle between add and subtract.</span>
+            </div>
+            <div class="col">
+                <nz-form-item>
+                    <nz-form-label nzFor="points-{{player.id}}" nzRequired>Points</nz-form-label>
+                    <nz-form-control
+                        nzErrorTip="Please enter points"
+                    >
+                        <input
+                            nz-input
+                            type="number"
+                            [(ngModel)]="playerPointsPositive[player.id]"
+                            id="points-{{player.id}}"
+                            name="points-{{player.id}}"
+                            required
+                        >
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </li>
+    </ul>
+</form>
 <div>
-    <button type="button">Cancel</button>
-    <button type="button">Update</button>
+    <a routerLink="/game-history">Cancel</a>
+    <button type="submit">Update</button>
 </div>

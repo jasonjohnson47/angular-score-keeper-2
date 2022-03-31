@@ -5,3 +5,38 @@
         <li><a routerLink="/game-setup">Manage Players</a></li>
     </ul>
 </nav>
+<section
+    *ngFor="let round of scoreHistory | slice:1; let i = index"
+    class="container"
+>
+    <div class="row">
+        <div class="col">
+            <h2>Round {{i + 1}}</h2>
+        </div>
+        <div class="col">
+            <a [routerLink]="['/edit-round', i + 1]">Edit <span class="visually-hidden">Round {{i}}</span></a>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Player</th>
+                <th scope="col">Last</th>
+                <th scope="col">Round</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let player of players">
+                <th scope="row">{{player.name}}</th>
+                <td>{{scoreHistory[i][player.id].points}}</td>
+                <td>{{getPlayerPointValue(player.id, round)}}</td>
+                <td>{{getAccumulativeScoreById(scoreHistory, player.id, i + 1)}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+</section>
+<div class="nav-buttons">
+    <a routerLink="/current-round">Back to Current Round</a>
+</div>

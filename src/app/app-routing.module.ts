@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'game-setup', component: GameSetupComponent },
   { path: 'current-round', component: CurrentRoundComponent },
   { path: 'game-history', component: GameHistoryComponent },
-  { path: 'edit-round', component: EditRoundComponent },
+  { path: 'edit-round/:round', component: EditRoundComponent },
   { path: '', redirectTo: '/game-setup', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },// Wildcard for 404
 ];
