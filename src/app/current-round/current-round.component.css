@@ -1,0 +1,23 @@
+.player-row {
+    font-size: 1.25rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.player-row dl {
+    margin: 0;
+}
+.nav-buttons {
+    margin-bottom: 1rem;
+}
+.nav-buttons .btn {
+    display: block;
+    width:100%;
+    margin-bottom: 0.5rem;
+}
+@media (min-width: 576px) {
+    .nav-buttons .btn {
+        display: inline-block;
+        width:auto;
+    }
+}

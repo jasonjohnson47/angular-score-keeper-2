@@ -13,6 +13,7 @@ import { CurrentRoundComponent } from './current-round/current-round.component';
 import { GameHistoryComponent } from './game-history/game-history.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { EditRoundComponent } from './edit-round/edit-round.component';
+import { FloatingLabelInputComponent } from './floating-label-input/floating-label-input.component';
 
 registerLocaleData(en);
 
@@ -24,7 +25,8 @@ registerLocaleData(en);
     CurrentRoundComponent,
     GameHistoryComponent,
     PageNotFoundComponent,
-    EditRoundComponent
+    EditRoundComponent,
+    FloatingLabelInputComponent
   ],
   imports: [
     BrowserModule,

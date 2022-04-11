@@ -1,38 +1,51 @@
 <h1>Who's Playing?</h1>
 <form #playerForm="ngForm" (ngSubmit)="startNewGame()">
-    <ul>
+    <ul class="list-unstyled player-list">
         <li *ngFor="let player of players">
-            <label for="name-{{player.id}}">Player Name</label>
-            <input
-                type="text"
-                [(ngModel)]="player.name"
-                id="name-{{player.id}}"
-                name="name-{{player.id}}"
-                (blur)="onBlur()"
-                required
-            >
+            <app-floating-label-input>
+                <label for="name-{{player.id}}">Player Name</label>
+                <input
+                    type="text"
+                    [(ngModel)]="player.name"
+                    id="name-{{player.id}}"
+                    name="name-{{player.id}}"
+                    (blur)="onBlur()"
+                    required
+                >
+            </app-floating-label-input>
             <button
                 *ngIf="players.length > 1"
                 type="button"
+                class="btn btn-delete"
                 (click)="deletePlayer(player.id)"
                 data-id="{{ player.id }}"
-            > Delete Player </button>
+            >
+                <span class="sr-only">Delete Player</span>
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><!-- Font Awesome Free 5.15.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) --><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg>
+            </button>
         </li>
     </ul>
-    <button type="button" (click)="addPlayer()">Add Player</button>
+    <button
+        type="button"
+        class="btn btn-block btn-primary"
+        (click)="addPlayer()"
+    >Add Player</button>
     <button
         *ngIf="roundToEdit === 1; else elseBlock"
         type="submit"
+        class="btn btn-block btn-primary"
         [disabled]="!playerForm.form.valid"
     >Start Game</button>
     <ng-template #elseBlock>
         <button
             type="button"
+            class="btn btn-block btn-primary"
             (click)="continueGame()"
             [disabled]="!playerForm.form.valid"
         >Continue Game</button>
         <button
             type="submit"
+            class="btn btn-block btn-primary"
             [disabled]="!playerForm.form.valid"
         >Start New Game</button>
     </ng-template>
