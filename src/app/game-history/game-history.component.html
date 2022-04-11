@@ -29,7 +29,7 @@
         <tbody>
             <tr *ngFor="let player of players">
                 <th scope="row">{{player.name}}</th>
-                <td>{{getPlayerPointValue(player.id, scoreHistory[i])}}</td>
+                <td>{{getAccumulativeScoreById(scoreHistory, player.id, i)}}</td>
                 <td>{{getPlayerPointValue(player.id, round)}}</td>
                 <td>{{getAccumulativeScoreById(scoreHistory, player.id, i + 1)}}</td>
             </tr>

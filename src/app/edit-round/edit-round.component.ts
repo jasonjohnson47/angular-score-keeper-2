@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Player } from '../common/models/player';
 import { PlayerOperations } from '../common/models/player-operations';
 import { Score, Round, ScoreHistory, PlayerPoints } from '../common/models/score';
@@ -19,6 +20,7 @@ export class EditRoundComponent implements OnInit {
     private route: ActivatedRoute,
     private playerService: PlayerService,
     private scoreService: ScoreService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -65,19 +67,11 @@ export class EditRoundComponent implements OnInit {
   players!: Player[];
   initialPlayerOperations!: PlayerOperations;
   initialRoundScores!: Round;
-
   playerOperations!: PlayerOperations;
   playerPoints!: PlayerPoints;
   playerPointsPositive!: PlayerPoints;
 
-  /*getPlayerPoints() {
-    return this.roundScores.reduce((acc: PlayerPoints, curr: Score) => {
-      return {...acc, [curr.id]: curr.points}
-    }, {});
-  }*/
-
   get thisRoundScores() {
-    console.log('thisRoundScores, playerPoints', this.playerPoints);
     const roundScores: Round = this.players.map((player) => {
       function calcPoints(operation: string, points: number) {
         let operationValue = operation === 'add' ? 1 : -1;
@@ -87,7 +81,7 @@ export class EditRoundComponent implements OnInit {
         id: player.id,
         points: calcPoints(
           this.playerOperations['operation-' + player.id],
-          Number(this.playerPoints[player.id])
+          Number(this.playerPointsPositive[player.id])
         )
       };
     });
@@ -102,10 +96,10 @@ export class EditRoundComponent implements OnInit {
   }
 
   onSubmit() {
-    const newScoreHistory = [...this.scoreService.getScoreHistory()];
+    const newScoreHistory: ScoreHistory = [...this.scoreService.getScoreHistory()];
     newScoreHistory[this.roundToEdit] = this.thisRoundScores;
-    console.log('onSubmit, newScoreHistory', newScoreHistory);
     this.scoreService.setScoreHistory(newScoreHistory);
+    this.router.navigate(['/game-history']);
   }
 
 }

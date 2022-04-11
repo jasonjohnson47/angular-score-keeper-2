@@ -10,12 +10,14 @@ export class ScoreService {
   constructor(private playerService: PlayerService) {}
 
   players: Player[] = this.playerService.getPlayers();
-
-  initialRoundPoints: Round = this.players.map((player) => {
-    return { id: player.id, points: 0 };
-  });
-
+  initialRoundPoints: Round = this.setInitialRoundPoints();
   initialScoreHistory: ScoreHistory = [this.initialRoundPoints];
+
+  setInitialRoundPoints() {
+    return this.players.map((player) => {
+      return { id: player.id, points: 0 };
+    });
+  }
 
   getScoreHistory(): ScoreHistory {
     return JSON.parse(
@@ -32,6 +34,9 @@ export class ScoreService {
   }
 
   resetScoreHistory() {
+    this.players = this.playerService.getPlayers();
+    this.initialRoundPoints = this.setInitialRoundPoints();
+    this.initialScoreHistory = [this.initialRoundPoints];
     this.setScoreHistory(this.initialScoreHistory);
   }
 
@@ -39,19 +44,18 @@ export class ScoreService {
     scoreHistory: ScoreHistory,
     newPlayerId: number
   ) {
+      const newScoreHistory = scoreHistory.map((scoreRound) => {
+        return [...scoreRound, {
+          id: newPlayerId,
+          points: 0
+        }];
+      });
 
-    const newScoreHistory = scoreHistory.map((scoreRound) => {
-      return [...scoreRound, {
-        id: newPlayerId,
-        points: 0
-      }];
-    });
-
-    localStorage.setItem(
-      'score-keeper-scores',
-      JSON.stringify(newScoreHistory, null, 2)
-    );
-  }
+      localStorage.setItem(
+        'score-keeper-scores',
+        JSON.stringify(newScoreHistory, null, 2)
+      );
+    }
 
   addRoundToScoreHistory(
     scoreHistory: ScoreHistory,

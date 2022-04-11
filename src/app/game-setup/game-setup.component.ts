@@ -55,9 +55,7 @@ export class GameSetupComponent implements OnInit {
     const highestId = Math.max(...playerIds);
     const newPlayerId = highestId + 1;
     this.players.push({ id: newPlayerId, name:'' });
-
     this.scoreService.addPlayerToScoreHistory(this.scoreHistory, newPlayerId);
-
     this.focusFirstEmptyField();
   }
 
