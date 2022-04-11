@@ -1,5 +1,5 @@
 <h1>Edit Round {{roundToEdit}}</h1>
-<form #editRoundForm="ngForm" nz-form (ngSubmit)="onSubmit()">
+<form #editRoundForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="container"></div>
     <ul>
         <li *ngFor="let player of players" class="row">
@@ -24,22 +24,15 @@
                 <span id="add-sub-toggle-desc" class="visually-hidden">Click to toggle between add and subtract.</span>
             </div>
             <div class="col">
-                <nz-form-item>
-                    <nz-form-label nzFor="points-{{player.id}}" nzRequired>Points</nz-form-label>
-                    <nz-form-control
-                        nzErrorTip="Please enter points. Enter a positive number."
-                    >
-                        <input
-                            nz-input
-                            type="number"
-                            [(ngModel)]="playerPointsPositive[player.id]"
-                            id="points-{{player.id}}"
-                            name="points-{{player.id}}"
-                            min="0"
-                            required
-                        >
-                    </nz-form-control>
-                </nz-form-item>
+                <label for="points-{{player.id}}">Points</label>
+                <input
+                    type="number"
+                    [(ngModel)]="playerPointsPositive[player.id]"
+                    id="points-{{player.id}}"
+                    name="points-{{player.id}}"
+                    min="0"
+                    required
+                >
             </div>
         </li>
     </ul>

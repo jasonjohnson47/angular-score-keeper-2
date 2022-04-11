@@ -6,7 +6,7 @@
     </ul>
 </nav>
 <h2>Score Card</h2>
-<form #scoringForm="ngForm" nz-form (ngSubmit)="onSubmit()">
+<form #scoringForm="ngForm" (ngSubmit)="onSubmit()">
     <ul>
         <li *ngFor="let player of players">
             <dl>
@@ -36,22 +36,15 @@
                     <span id="add-sub-toggle-desc" class="visually-hidden">Click to toggle between add and subtract.</span>
                 </div>
                 <div>
-                    <nz-form-item>
-                        <nz-form-label nzFor="points-{{player.id}}" nzRequired>Points</nz-form-label>
-                        <nz-form-control
-                            nzErrorTip="Please enter points. Enter a positive number."
-                        >
-                            <input
-                                nz-input
-                                type="number"
-                                [(ngModel)]="playerPoints[player.id]"
-                                id="points-{{player.id}}"
-                                name="points-{{player.id}}"
-                                min="0"
-                                required
-                            >
-                        </nz-form-control>
-                    </nz-form-item>
+                    <label for="points-{{player.id}}"></label>
+                    <input
+                        type="number"
+                        [(ngModel)]="playerPoints[player.id]"
+                        id="points-{{player.id}}"
+                        name="points-{{player.id}}"
+                        min="0"
+                        required
+                    >
                 </div>
             </div>
         </li>
