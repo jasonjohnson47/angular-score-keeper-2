@@ -1,0 +1,13 @@
+<button
+  type="button"
+  [className]="btnClass == '' ? 'add-sub-btn' : 'add-sub-btn ' + btnClass"
+  [attr.aria-describedby]="'add-sub-toggle-desc-' + id"
+  [attr.aria-pressed]="currOperation == 'subtract'"
+  (click)="handleAddSubBtn(currOperation)"
+>
+  <span class="add" aria-label="Add">+</span>
+  <span class="subtract" aria-label="Subtract">-</span>
+</button>
+<span id="add-sub-toggle-desc-{{ id }}" class="visually-hidden">
+  Click to toggle between add and subtract.
+</span>

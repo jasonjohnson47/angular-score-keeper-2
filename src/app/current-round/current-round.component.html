@@ -19,23 +19,12 @@
                 <div class="col-auto" role="group" aria-label="points this round">
                     <div class="row">
                         <div class="col-auto pr-0">
-                            <input
-                                type="hidden"
-                                [(ngModel)]="playerOperations['operation-' + player.id]"
-                                name="operation-{{player.id}}"
-                            >
-                            <button
-                                type="button"
-                                id="add-sub-{{player.id}}"
-                                class="add-sub-btn"
-                                aria-describedby="add-sub-toggle-desc"
-                                [attr.aria-pressed]="playerOperations['operation-' + player.id] == 'subtract'"
-                                (click)="onAddSubPressed(player.id)"
-                            >
-                                <span class="add" aria-label="Add">+</span>
-                                <span class="subtract" aria-label="Subtract">-</span>
-                            </button>
-                            <span id="add-sub-toggle-desc" class="visually-hidden">Click to toggle between add and subtract.</span>
+                            <app-add-sub-toggle
+                                [id]="player.id.toString()"
+                                [btnClass]="'btn btn-secondary'"
+                                [currOperation]="playerOperations['operation-' + player.id]"
+                                (toggleAddSub)="updatePlayerOperations(player.id.toString(), $event)"
+                            ></app-add-sub-toggle>
                         </div>
                         <div class="col-auto">
                             <app-floating-label-input>

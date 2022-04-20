@@ -14,6 +14,7 @@ import { GameHistoryComponent } from './game-history/game-history.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { EditRoundComponent } from './edit-round/edit-round.component';
 import { FloatingLabelInputComponent } from './floating-label-input/floating-label-input.component';
+import { AddSubToggleComponent } from './add-sub-toggle/add-sub-toggle.component';
 
 registerLocaleData(en);
 
@@ -26,7 +27,8 @@ registerLocaleData(en);
     GameHistoryComponent,
     PageNotFoundComponent,
     EditRoundComponent,
-    FloatingLabelInputComponent
+    FloatingLabelInputComponent,
+    AddSubToggleComponent
   ],
   imports: [
     BrowserModule,

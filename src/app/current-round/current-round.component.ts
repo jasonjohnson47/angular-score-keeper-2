@@ -42,14 +42,26 @@ export class CurrentRoundComponent implements OnInit {
     {}
   );
 
-  defaultPlayerOperations: PlayerOperations = this.players.reduce(
+  setDefaultPlayerOperations() {
+    const defaultPlayerOperations: PlayerOperations = this.players.reduce(
+      (acc: PlayerOperations, currPlayer: Player) => {
+        const keyName = 'operation-' + currPlayer.id; 
+        return { ...acc, [keyName]: 'add' };
+      },
+      {}
+    );
+    return defaultPlayerOperations;
+  }
+  playerOperations = this.setDefaultPlayerOperations();
+
+  /*defaultPlayerOperations: PlayerOperations = this.players.reduce(
     (acc: PlayerOperations, currPlayer: Player) => {
       const keyName = 'operation-' + currPlayer.id; 
       return { ...acc, [keyName]: 'add' };
     },
     {}
   );
-  playerOperations = {...this.defaultPlayerOperations};
+  playerOperations = {...this.defaultPlayerOperations};*/
 
   get thisRoundScores() {
     const roundScores: Round = this.players.map((player) => {
@@ -68,16 +80,17 @@ export class CurrentRoundComponent implements OnInit {
     return roundScores;
   }
 
-  onAddSubPressed(id: number) {
+  updatePlayerOperations(id: string, operation: string) {
     // unpressed = adding
     // pressed = subtracting
-    this.playerOperations['operation-' + id] =
-    this.playerOperations['operation-' + id] === 'subtract' ? 'add' : 'subtract';
+    this.playerOperations['operation-' + id] = operation;
+    //console.log(this.playerOperations);
   }
 
   onSubmit() {
     this.roundService.setRoundToEdit(this.roundToEdit + 1);
     this.scoreService.addRoundToScoreHistory(this.scoreHistory, this.thisRoundScores);
-    this.scoringForm.reset(this.defaultPlayerOperations);
+    this.playerOperations = this.setDefaultPlayerOperations();
+    this.scoringForm.reset();
   }
 }

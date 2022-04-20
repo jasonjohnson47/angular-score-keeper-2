@@ -14,15 +14,6 @@
     border: 0 !important;
 }
 
-.add-sub-btn[aria-pressed="false"] .add,
-.add-sub-btn[aria-pressed="true"] .subtract {
-    display: inline-block;
-}
-.add-sub-btn[aria-pressed="false"] .subtract,
-.add-sub-btn[aria-pressed="true"] .add {
-    display: none;
-}
-
 .h-100 {
     height: 100% !important;
 }
