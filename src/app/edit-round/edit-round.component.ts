@@ -88,11 +88,11 @@ export class EditRoundComponent implements OnInit {
     return roundScores;
   }
 
-  onAddSubPressed(id: number) {
+  updatePlayerOperations(id: string, operation: string) {
     // unpressed = adding
     // pressed = subtracting
-    this.playerOperations['operation-' + id] =
-    this.playerOperations['operation-' + id] === 'subtract' ? 'add' : 'subtract';
+    this.playerOperations['operation-' + id] = operation;
+    //console.log(this.playerOperations);
   }
 
   onSubmit() {

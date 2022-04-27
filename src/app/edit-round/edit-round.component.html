@@ -1,46 +1,43 @@
 <h1>Edit Round {{roundToEdit}}</h1>
 <form #editRoundForm="ngForm" (ngSubmit)="onSubmit()">
-    <div class="container"></div>
-    <ul>
-        <li *ngFor="let player of players" class="row">
+    <ul class="container-fluid">
+        <li *ngFor="let player of players" class="row player-row align-items-center">
             <div class="col">{{player.name}}</div>
-            <div class="col">
-                <input
-                    type="hidden"
-                    [(ngModel)]="playerOperations['operation-' + player.id]"
-                    name="operation-{{player.id}}"
-                >
-                <button
-                    type="button"
-                    id="add-sub-{{player.id}}"
-                    class="add-sub-btn"
-                    aria-describedby="add-sub-toggle-desc"
-                    [attr.aria-pressed]="playerOperations['operation-' + player.id] == 'subtract'"
-                    (click)="onAddSubPressed(player.id)"
-                >
-                    <span class="add" aria-label="Add">+</span>
-                    <span class="subtract" aria-label="Subtract">-</span>
-                </button>
-                <span id="add-sub-toggle-desc" class="visually-hidden">Click to toggle between add and subtract.</span>
+            <div class="col-auto pr-0">
+                <app-add-sub-toggle
+                    [id]="player.id.toString()"
+                    [btnClass]="'btn btn-secondary'"
+                    [currOperation]="playerOperations['operation-' + player.id]"
+                    (toggleAddSub)="updatePlayerOperations(player.id.toString(), $event)"
+                ></app-add-sub-toggle>
             </div>
-            <div class="col">
-                <label for="points-{{player.id}}">Points</label>
-                <input
-                    type="number"
-                    [(ngModel)]="playerPointsPositive[player.id]"
-                    id="points-{{player.id}}"
-                    name="points-{{player.id}}"
-                    min="0"
-                    required
-                >
+            <div class="col-auto">
+                <app-floating-label-input>
+                    <label for="points-{{player.id}}">Points</label>
+                    <input
+                        type="number"
+                        [(ngModel)]="playerPointsPositive[player.id]"
+                        id="points-{{player.id}}"
+                        name="points-{{player.id}}"
+                        min="0"
+                        required
+                    >
+                </app-floating-label-input>
             </div>
         </li>
     </ul>
-    <div>
-        <a routerLink="/game-history">Cancel</a>
-        <button
-            type="submit"
-            [disabled]="!editRoundForm.form.valid"
-        >Update</button>
-    </div>
+    <nav class="nav-buttons">
+        <ul class="list-unstyled list-inline nav-buttons">
+            <li class="list-inline-item">
+                <a class="btn btn-secondary" routerLink="/game-history">Cancel</a>
+            </li>
+            <li class="list-inline-item">
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="!editRoundForm.form.valid"
+                >Update</button>
+            </li>
+        </ul>
+    </nav>
 </form>

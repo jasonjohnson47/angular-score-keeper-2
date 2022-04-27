@@ -1,7 +1,7 @@
 <h1>Who's Playing?</h1>
 <form #playerForm="ngForm" (ngSubmit)="startNewGame()">
     <ul class="list-unstyled player-list">
-        <li *ngFor="let player of players">
+        <li *ngFor="let player of players" class="mb-3">
             <app-floating-label-input>
                 <label for="name-{{player.id}}">Player Name</label>
                 <input
