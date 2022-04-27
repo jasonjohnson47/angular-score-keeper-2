@@ -1,20 +1,20 @@
 <h1>Scoring History</h1>
 <nav class="nav-buttons">
-    <ul>
-        <li><a routerLink="/current-round">Back to Current Round</a></li>
-        <li><a routerLink="/game-setup">Manage Players</a></li>
+    <ul class="list-unstyled list-inline nav-buttons">
+        <li class="list-inline-item"><a class="btn btn-secondary" routerLink="/current-round">Back to Current Round</a></li>
+        <li class="list-inline-item"><a class="btn btn-secondary" routerLink="/game-setup">Manage Players</a></li>
     </ul>
 </nav>
 <section
     *ngFor="let round of scoreHistory | slice:1; let i = index"
-    class="container"
+    class="container-fluid"
 >
-    <div class="row">
+    <div class="row round-heading">
         <div class="col">
             <h2>Round {{i + 1}}</h2>
         </div>
-        <div class="col">
-            <a [routerLink]="['/edit-round', i + 1]">Edit <span class="visually-hidden">Round {{i}}</span></a>
+        <div class="col-auto">
+            <a class="btn btn-sm btn-primary" [routerLink]="['/edit-round', i + 1]">Edit <span class="visually-hidden">Round {{i}}</span></a>
         </div>
     </div>
     <table>
@@ -38,5 +38,5 @@
     <hr>
 </section>
 <div class="nav-buttons">
-    <a routerLink="/current-round">Back to Current Round</a>
+    <a class="btn btn-primary" routerLink="/current-round">Back to Current Round</a>
 </div>
