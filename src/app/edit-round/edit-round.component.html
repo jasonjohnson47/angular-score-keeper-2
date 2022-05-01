@@ -16,6 +16,7 @@
                     <label for="points-{{player.id}}">Points</label>
                     <input
                         #inputRef
+                        #pointsInput="ngModel"
                         appFloatingLabelInput
                         type="number"
                         [(ngModel)]="playerPointsPositive[player.id]"
@@ -24,6 +25,7 @@
                         min="0"
                         required
                     >
+                    <div class="error-message" *ngIf="pointsInput.touched && !pointsInput.valid">Points required</div>
                 </app-floating-label-input>
             </div>
         </li>

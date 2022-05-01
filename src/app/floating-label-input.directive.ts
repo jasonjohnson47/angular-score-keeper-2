@@ -11,13 +11,11 @@ export class FloatingLabelInputDirective {
 
   @HostListener('focus')
   onFocus() {
-    console.log('on focus');
     this.focus = true;
   }
 
   @HostListener('blur')
   onBlur() {
-    console.log('on blur');
     this.focus = false;
   }
 

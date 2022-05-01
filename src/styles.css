@@ -156,7 +156,9 @@ hr {
     color: #212529;
     box-shadow: 0 0 0 0.1875rem rgba(255, 255, 255, 0.33) !important;
 }
-
+.btn[disabled] {
+    opacity: 0.65;
+}
 .error-message {
     font-weight: 800;
     color: #f97583;
@@ -179,19 +181,19 @@ hr {
     box-shadow: inset 0 4px 0 0 rgba(0,0,0,0.25);
 }
 .floating-label.has-focus input {
-    /*border-color: #94999e;*/
     border-color: #bacc4c;
     outline: 0 none;
 }
 .floating-label.has-error input {
     border-color: #f97583;
 }
-.error-message {
+.floating-label .error-message {
     font-size:0.875rem;
     font-weight: 400;
     margin-left:1rem;
-    position:relative;
-    top:-0.75em;
+}
+.floating-label input.ng-touched.ng-invalid {
+    border-color:#f97583;
 }
 .floating-label label {
     position: absolute;
