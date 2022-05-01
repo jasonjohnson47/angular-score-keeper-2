@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { EditRoundComponent } from './edit-round/edit-round.component';
 import { FloatingLabelInputComponent } from './floating-label-input/floating-label-input.component';
 import { AddSubToggleComponent } from './add-sub-toggle/add-sub-toggle.component';
+import { FloatingLabelInputDirective } from './floating-label-input.directive';
 
 registerLocaleData(en);
 
@@ -28,7 +29,8 @@ registerLocaleData(en);
     PageNotFoundComponent,
     EditRoundComponent,
     FloatingLabelInputComponent,
-    AddSubToggleComponent
+    AddSubToggleComponent,
+    FloatingLabelInputDirective,
   ],
   imports: [
     BrowserModule,

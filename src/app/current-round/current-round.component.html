@@ -27,9 +27,11 @@
                             ></app-add-sub-toggle>
                         </div>
                         <div class="col-auto">
-                            <app-floating-label-input>
+                            <app-floating-label-input [inputValue]="inputRef.value">
                                 <label for="points-{{player.id}}">Points</label>
                                 <input
+                                    #inputRef
+                                    appFloatingLabelInput
                                     type="number"
                                     [(ngModel)]="playerPoints[player.id]"
                                     id="points-{{player.id}}"

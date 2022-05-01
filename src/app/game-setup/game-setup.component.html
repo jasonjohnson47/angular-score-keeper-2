@@ -2,9 +2,11 @@
 <form #playerForm="ngForm" (ngSubmit)="startNewGame()">
     <ul class="list-unstyled player-list">
         <li *ngFor="let player of players" class="mb-3">
-            <app-floating-label-input>
+            <app-floating-label-input [inputValue]="inputRef.value">
                 <label for="name-{{player.id}}">Player Name</label>
                 <input
+                    #inputRef
+                    appFloatingLabelInput
                     type="text"
                     [(ngModel)]="player.name"
                     id="name-{{player.id}}"
