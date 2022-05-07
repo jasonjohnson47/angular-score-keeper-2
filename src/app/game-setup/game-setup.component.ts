@@ -61,6 +61,7 @@ export class GameSetupComponent implements OnInit {
 
   deletePlayer(id: number) {
     this.playerService.deletePlayer(id);
+    this.scoreService.removePlayerFromScoreHistory(id);
     this.players = this.playerService.getPlayers();
   };
 
