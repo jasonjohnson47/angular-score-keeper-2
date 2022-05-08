@@ -57,14 +57,18 @@ export class ScoreService {
       );
     }
 
-  removePlayerFromScoreHistory(playerId: number) {
-    const newScoreHistory = this.getScoreHistory().map((scoreRound) => {
+  removePlayerFromScoreHistory(
+    scoreHistory: ScoreHistory,
+    playerId: number
+  ) {
+    const newScoreHistory = scoreHistory.map((scoreRound) => {
       return scoreRound.filter((score) => score.id !== playerId);
     });
     localStorage.setItem(
       'score-keeper-scores',
       JSON.stringify(newScoreHistory, null, 2)
     );
+    return newScoreHistory;
   }
 
   addRoundToScoreHistory(

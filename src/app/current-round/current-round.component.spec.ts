@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CurrentRoundComponent } from './current-round.component';
+import { FormsModule } from '@angular/forms';
 
 describe('CurrentRoundComponent', () => {
   let component: CurrentRoundComponent;
@@ -8,7 +8,8 @@ describe('CurrentRoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CurrentRoundComponent ]
+      declarations: [ CurrentRoundComponent ],
+      imports: [ FormsModule ]
     })
     .compileComponents();
   });

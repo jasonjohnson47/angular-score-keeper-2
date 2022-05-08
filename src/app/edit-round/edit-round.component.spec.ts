@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EditRoundComponent } from './edit-round.component';
+import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
 
 describe('EditRoundComponent', () => {
   let component: EditRoundComponent;
@@ -8,7 +9,8 @@ describe('EditRoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditRoundComponent ]
+      declarations: [ EditRoundComponent ],
+      imports: [ FormsModule, AppRoutingModule ]
     })
     .compileComponents();
   });

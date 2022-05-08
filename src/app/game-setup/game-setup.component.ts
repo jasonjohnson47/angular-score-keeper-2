@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Player } from '../common/models/player';
 import { ScoreHistory } from '../common/models/score';
@@ -11,7 +11,7 @@ import { RoundService } from '../common/services/round.service';
   templateUrl: './game-setup.component.html',
   styleUrls: ['./game-setup.component.css']
 })
-export class GameSetupComponent implements OnInit {
+export class GameSetupComponent {
 
   constructor(
     private playerService: PlayerService,
@@ -19,9 +19,6 @@ export class GameSetupComponent implements OnInit {
     private roundService: RoundService,
     private router: Router
   ) { }
-
-  ngOnInit(): void {
-  }
 
   @ViewChild('playerForm') playerForm!: HTMLFormElement;
 
@@ -61,7 +58,7 @@ export class GameSetupComponent implements OnInit {
 
   deletePlayer(id: number) {
     this.playerService.deletePlayer(id);
-    this.scoreService.removePlayerFromScoreHistory(id);
+    this.scoreService.removePlayerFromScoreHistory(this.scoreHistory, id);
     this.players = this.playerService.getPlayers();
   };
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Player } from '../common/models/player';
 import { PlayerOperations } from '../common/models/player-operations';
 import { PlayerService } from '../common/services/player.service';
@@ -12,14 +12,12 @@ import { NgForm } from '@angular/forms';
   templateUrl: './current-round.component.html',
   styleUrls: ['./current-round.component.css'],
 })
-export class CurrentRoundComponent implements OnInit {
+export class CurrentRoundComponent {
   constructor(
     private playerService: PlayerService,
     private scoreService: ScoreService,
     private roundService: RoundService
   ) {}
-
-  ngOnInit(): void {}
 
   @ViewChild('scoringForm') scoringForm!: NgForm;
 

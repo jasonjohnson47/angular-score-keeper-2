@@ -1,14 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-add-sub-toggle',
   templateUrl: './add-sub-toggle.component.html',
   styleUrls: ['./add-sub-toggle.component.css'],
 })
-export class AddSubToggleComponent implements OnInit {
+export class AddSubToggleComponent {
   constructor() {}
-
-  ngOnInit() {}
 
   @Input() id!: string;
   @Input() btnClass: string = '';

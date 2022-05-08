@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Player } from '../common/models/player';
 import { Score, Round, ScoreHistory } from '../common/models/score';
 import { PlayerService } from '../common/services/player.service';
@@ -9,15 +9,12 @@ import { ScoreService } from '../common/services/score.service';
   templateUrl: './game-history.component.html',
   styleUrls: ['./game-history.component.css']
 })
-export class GameHistoryComponent implements OnInit {
+export class GameHistoryComponent {
 
   constructor(
     private playerService: PlayerService,
     private scoreService: ScoreService,
   ) { }
-
-  ngOnInit(): void {
-  }
 
   players: Player[] = this.playerService.getPlayers();
   scoreHistory: ScoreHistory = this.scoreService.getScoreHistory();

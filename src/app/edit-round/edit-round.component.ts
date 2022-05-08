@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Player } from '../common/models/player';
 import { PlayerOperations } from '../common/models/player-operations';
 import { Score, Round, ScoreHistory, PlayerPoints } from '../common/models/score';
 import { PlayerService } from '../common/services/player.service';
 import { ScoreService } from '../common/services/score.service';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @Component({
   selector: 'app-edit-round',
