@@ -6,11 +6,14 @@ import { ScoreService } from '../common/services/score.service';
 import { RoundService } from '../common/services/round.service';
 import { ScoreHistory, Round, PlayerPoints } from '../common/models/score';
 import { NgForm } from '@angular/forms';
+import { animateNumber } from '../animations';
+
 
 @Component({
   selector: 'app-current-round',
   templateUrl: './current-round.component.html',
   styleUrls: ['./current-round.component.css'],
+  animations: [ animateNumber ]
 })
 export class CurrentRoundComponent {
   constructor(

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CurrentRoundComponent } from './current-round.component';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CurrentRoundComponent', () => {
   let component: CurrentRoundComponent;
@@ -9,7 +10,7 @@ describe('CurrentRoundComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CurrentRoundComponent ],
-      imports: [ FormsModule ]
+      imports: [ FormsModule, BrowserAnimationsModule ]
     })
     .compileComponents();
   });
