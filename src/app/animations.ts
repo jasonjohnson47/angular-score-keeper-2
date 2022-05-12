@@ -1,15 +1,17 @@
 import {
   trigger,
-  state,
   transition,
   style,
   animate,
+  query,
+  stagger,
 } from '@angular/animations';
 
-export let animateNumber = trigger('animateNumber', [
-  //state('void', style({ transform: 'translateY(-20px)', opacity: '0' })),
-  transition(':increment, :decrement', [
-      style({ transform: 'translateY(-20px)', opacity: '0' }),
-      animate('750ms ease-out')
-    ]),
+export let animateScores = trigger('animateScores', [
+  transition(':enter, :increment, :decrement', [
+    query('.player-score', stagger(175, [
+      style({ transform: 'scale(2.5) translateY(-20px)', opacity: '0' }),
+      animate('1s ease-out'),
+    ]), {optional: true}),
+  ]),
 ]);

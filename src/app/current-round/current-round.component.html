@@ -5,15 +5,19 @@
         <li class="list-inline-item"><a class="btn btn-secondary" routerLink="/game-setup">Manage Players</a></li>
     </ul>
 </nav>
-<section class="score-card">
+<section class="score-card" [@animateScores]="roundToEdit" (@animateScores.start)="animateScoresStarted($event)">
     <h2>Score Card</h2>
     <form #scoringForm="ngForm" (ngSubmit)="onSubmit()">
         <ul class="container-fluid">
-            <li *ngFor="let player of players" class="row player-row">
+            <li *ngFor="let player of players; index as i" class="row player-row">
                 <dl class="col">
                     <div class="row justify-content-between h-100 align-content-center">
                         <dt class="col">{{player.name}}</dt>
-                        <dd [@animateNumber]="roundToEdit" class="col-auto">{{getAccumulativeScoreById(scoreHistory, player.id, roundToEdit)}}</dd>
+                        <dd
+                            [attr.data-index]="i"
+                            [attr.data-id]="player.id"
+                            class="col-auto player-score"
+                        >{{getAccumulativeScoreById(scoreHistory, player.id, roundToEdit)}}</dd>
                     </div>
                 </dl>
                 <div class="col-auto" role="group" aria-label="points this round">

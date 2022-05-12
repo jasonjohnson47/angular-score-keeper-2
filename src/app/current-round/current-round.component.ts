@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Player } from '../common/models/player';
 import { PlayerOperations } from '../common/models/player-operations';
 import { PlayerService } from '../common/services/player.service';
@@ -6,14 +6,14 @@ import { ScoreService } from '../common/services/score.service';
 import { RoundService } from '../common/services/round.service';
 import { ScoreHistory, Round, PlayerPoints } from '../common/models/score';
 import { NgForm } from '@angular/forms';
-import { animateNumber } from '../animations';
-
+import { animateScores } from '../animations';
+import { animateNumber } from '../animateNumber';
 
 @Component({
   selector: 'app-current-round',
   templateUrl: './current-round.component.html',
   styleUrls: ['./current-round.component.css'],
-  animations: [ animateNumber ]
+  animations: [animateScores],
 })
 export class CurrentRoundComponent {
   constructor(
@@ -23,6 +23,28 @@ export class CurrentRoundComponent {
   ) {}
 
   @ViewChild('scoringForm') scoringForm!: NgForm;
+
+  animateScoresStarted($event: any) {
+    const playerScores = $event.element.querySelectorAll('.player-score');
+    playerScores.forEach((scoreEl: HTMLElement) => {
+      const playerId = Number(scoreEl.dataset['id']);
+      const initialScore = this.scoreService.getAccumulativeScoreById(
+        this.scoreHistory,
+        playerId,
+        this.roundToEdit - 2
+      );
+      const newScore = this.scoreService.getAccumulativeScoreById(
+        this.scoreHistory,
+        playerId,
+        this.roundToEdit
+      );
+      const scoreIndex = Number(scoreEl.dataset['index']);
+
+      setTimeout(() => {
+        animateNumber(scoreEl, initialScore, newScore);
+      }, scoreIndex * 250);
+    });
+  }
 
   players: Player[] = this.playerService.getPlayers();
 
@@ -46,7 +68,7 @@ export class CurrentRoundComponent {
   setDefaultPlayerOperations() {
     const defaultPlayerOperations: PlayerOperations = this.players.reduce(
       (acc: PlayerOperations, currPlayer: Player) => {
-        const keyName = 'operation-' + currPlayer.id; 
+        const keyName = 'operation-' + currPlayer.id;
         return { ...acc, [keyName]: 'add' };
       },
       {}
@@ -55,27 +77,19 @@ export class CurrentRoundComponent {
   }
   playerOperations = this.setDefaultPlayerOperations();
 
-  /*defaultPlayerOperations: PlayerOperations = this.players.reduce(
-    (acc: PlayerOperations, currPlayer: Player) => {
-      const keyName = 'operation-' + currPlayer.id; 
-      return { ...acc, [keyName]: 'add' };
-    },
-    {}
-  );
-  playerOperations = {...this.defaultPlayerOperations};*/
+  calcPoints(operation: string, points: number) {
+    let operationValue = operation === 'add' ? 1 : -1;
+    return points * operationValue;
+  }
 
   get thisRoundScores() {
     const roundScores: Round = this.players.map((player) => {
-      function calcPoints(operation: string, points: number) {
-        let operationValue = operation === 'add' ? 1 : -1;
-        return points * operationValue;
-      }
       return {
         id: player.id,
-        points: calcPoints(
+        points: this.calcPoints(
           this.playerOperations['operation-' + player.id],
           Number(this.playerPoints[player.id])
-        )
+        ),
       };
     });
     return roundScores;
@@ -90,7 +104,10 @@ export class CurrentRoundComponent {
 
   onSubmit() {
     this.roundService.setRoundToEdit(this.roundToEdit + 1);
-    this.scoreService.addRoundToScoreHistory(this.scoreHistory, this.thisRoundScores);
+    this.scoreService.addRoundToScoreHistory(
+      this.scoreHistory,
+      this.thisRoundScores
+    );
     this.playerOperations = this.setDefaultPlayerOperations();
     this.scoringForm.reset();
   }
